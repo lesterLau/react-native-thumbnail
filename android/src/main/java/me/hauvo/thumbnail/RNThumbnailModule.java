@@ -40,6 +40,7 @@ public class RNThumbnailModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void get(String filePath, Promise promise) {
     filePath = filePath.replace("file://","");
+    filePath = QrcodeUtil.getImagePath(reactContext, Uri.parse(filePath), null);
     MediaMetadataRetriever retriever = new MediaMetadataRetriever();
     retriever.setDataSource(filePath);
     Bitmap image = retriever.getFrameAtTime(1000000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);

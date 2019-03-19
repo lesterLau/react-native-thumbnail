@@ -10,6 +10,7 @@ import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import android.media.ThumbnailUtils;
 import android.provider.MediaStore;
+import android.net.Uri;
 import android.provider.MediaStore.Video.Thumbnails;
 import android.graphics.Bitmap;
 import android.os.Environment;

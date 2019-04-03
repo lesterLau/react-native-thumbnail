@@ -100,30 +100,31 @@ public class QrcodeUtil {
             if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
                 //解析出数字格式id
                 String id = docId.split(":")[1];
-                String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+                String selection = MediaStore.Images.Media._ID + "=?";
+                imagePath = getImagePath(context, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection, new String[]{id});
             } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("" +
                         "content://downloads/public_downloads"), Long.valueOf(docId));
-                imagePath = getImagePath(context, contentUri, null);
+                imagePath = getImagePath(context, contentUri, null, null);
             }
         } else if ("content".equals(uri.getScheme())) {
             //如果不是document类型的uri，则使用普通的方式处理
-            imagePath = getImagePath(context, uri, null);
+            imagePath = getImagePath(context, uri, null, null);
         }
         return imagePath;
     }
 
     /**
-     * 通过 uri seletion选择来获取图片的真实uri
+     * 通过 uri selection选择来获取图片的真实uri
      *
      * @param uri
-     * @param seletion
+     * @param selection
+     * @param selectionArgs
      * @return
      */
-    public static String getImagePath(Context context, Uri uri, String seletion) {
+    private static String getImagePath(Context context, Uri uri, String selection, String[] selectionArgs) {
         String path = null;
-        Cursor cursor = context.getContentResolver().query(uri, null, seletion, null, null);
+        Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
@@ -139,7 +140,7 @@ public class QrcodeUtil {
             return handleImageOnKitKat(context, data);
         } else {
             //4.4一下用该方法解析图片的获取
-            return QrcodeUtil.getImagePath(context, data.getData(), null);
+            return QrcodeUtil.getImagePath(context, data.getData(), null, null);
         }
     }
 

@@ -37,7 +37,7 @@ public class RNThumbnailModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void get(String filePath, Promise promise) {
         if (!filePath.contains("file://")) {
-            filePath = QrcodeUtil.getImagePath(reactContext, Uri.parse(filePath), null);
+            filePath = QrcodeUtil.getImagePath(reactContext, Uri.parse(filePath), null, null);
         }
         filePath = filePath.replace("file://", "");
         MediaMetadataRetriever retriever = new MediaMetadataRetriever();

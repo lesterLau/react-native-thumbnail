@@ -122,7 +122,7 @@ public class QrcodeUtil {
      * @param selectionArgs
      * @return
      */
-    private static String getImagePath(Context context, Uri uri, String selection, String[] selectionArgs) {
+    public static String getImagePath(Context context, Uri uri, String selection, String[] selectionArgs) {
         String path = null;
         Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
         if (cursor != null) {

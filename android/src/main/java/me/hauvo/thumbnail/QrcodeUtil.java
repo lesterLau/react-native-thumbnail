@@ -124,7 +124,11 @@ public class QrcodeUtil {
      */
     public static String getImagePath(Context context, Uri uri, String selection, String[] selectionArgs) {
         String path = null;
-        Cursor cursor = context.getContentResolver().query(uri, null, selection, selectionArgs, null);
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+        Cursor cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
